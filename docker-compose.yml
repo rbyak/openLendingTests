@@ -1,0 +1,14 @@
+version: '3.7'
+#This will pull selenium standalone chrome debug as well as spin up the docker container
+#tests are pointed to port:4444
+services:
+  selenium-debug:
+    image: selenium/standalone-chrome-debug
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1400
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "4444:4444"
+      - "5900:5900"
