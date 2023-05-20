@@ -1,6 +1,7 @@
 package com;
 
 import com.google.common.base.Preconditions;
+import org.asynchttpclient.uri.Uri;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -13,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class DesktopTestBase {
@@ -33,8 +36,10 @@ public class DesktopTestBase {
         chromeOptions.merge(desiredCapabilities);
 
         try {
-            webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), chromeOptions);
-        } catch (MalformedURLException e) {
+            var options = new ChromeOptions();
+            var url = new URI("http://localhost:4444/wd/hub");
+            webDriver = new RemoteWebDriver(url.toURL(), chromeOptions);
+        } catch (MalformedURLException | URISyntaxException e) {
             e.printStackTrace();
         }
         LOG.info(
